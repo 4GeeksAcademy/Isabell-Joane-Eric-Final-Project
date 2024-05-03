@@ -17,10 +17,9 @@ Ideas:
 To Do: Which topic(s) has the most available data? 
 
 
-May 1, 2024 : FEATURE SELECTION!!!!!!
+May 1, 2024 : FEATURE SELECTION COMPLETE!
 
 Auction					Auction provider at which the  vehicle was purchased
-VehYear					The manufacturer's year of the vehicle
 VehicleAge				The Years elapsed since the manufacturer's year
 Make					Vehicle Manufacturer 
 Model					Vehicle Model
@@ -28,7 +27,6 @@ Trim	- explore			Vehicle Trim Level
 Transmission	- explore		Vehicles transmission type (Automatic, Manual)
 VehOdo					The vehicles odometer reading
 Nationality				The Manufacturer's country
-Size		- explore		The size category of the vehicle (Compact, SUV, etc.)
 TopThreeAmericanName	- explore	Identifies if the manufacturer is one of the top three American manufacturers
 MMRAcquisitionAuctionAveragePrice	Acquisition price for this vehicle in average condition at time of purchase	
 MMRAcquisitionAuctionCleanPrice		Acquisition price for this vehicle in the above Average condition at time of purchase
