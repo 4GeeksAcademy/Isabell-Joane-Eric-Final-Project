@@ -40,3 +40,13 @@ AcquisitionType				Identifies how the vehicle was aquired (Auction buy, trade in
 VNZIP                                   Zipcode where the car was purchased
 VehBCost				Acquisition cost paid for the vehicle at time of purchase
 WarrantyCost    - lol                   Warranty price (term=36month  and millage=36K)
+
+May 13, 2024: Final Feature AFTER EDA: 
+'IsBadBuy', 'PurchDate', 'Auction', 'VehYear', 'VehicleAge', 'Make',
+       'Model', 'Trim', 'Transmission', 'WheelTypeID', 'VehOdo', 'Nationality',
+       'Size', 'TopThreeAmericanName', 'MMRAcquisitionAuctionAveragePrice',
+       'MMRAcquisitionAuctionCleanPrice', 'MMRAcquisitionRetailAveragePrice',
+       'MMRAcquisitonRetailCleanPrice', 'MMRCurrentAuctionAveragePrice',
+       'MMRCurrentAuctionCleanPrice', 'MMRCurrentRetailAveragePrice',
+       'MMRCurrentRetailCleanPrice', 'VehBCost', 'IsOnlineSale',
+       'WarrantyCost', 'ZipRegion'
