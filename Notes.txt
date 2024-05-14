@@ -42,7 +42,7 @@ VehBCost				Acquisition cost paid for the vehicle at time of purchase
 WarrantyCost    - lol                   Warranty price (term=36month  and millage=36K)
 
 May 13, 2024: Final Feature AFTER EDA: 
-'IsBadBuy', 'PurchDate', 'Auction', 'VehYear', 'VehicleAge', 'Make',
+'IsBadBuy', 'Auction', 'VehYear', 'VehicleAge', 'Make',
        'Model', 'Trim', 'Transmission', 'WheelTypeID', 'VehOdo', 'Nationality',
        'Size', 'TopThreeAmericanName', 'MMRAcquisitionAuctionAveragePrice',
        'MMRAcquisitionAuctionCleanPrice', 'MMRAcquisitionRetailAveragePrice',
