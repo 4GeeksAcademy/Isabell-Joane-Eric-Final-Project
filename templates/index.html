@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Auction Prediction</title>
+</head>
+<body>
+    <h1>Car Auction Prediction Form</h1>
+    <form action="/predict" method="post">
+        <label for="make">Make:</label>
+        <select name="Make" id="make" required>
+            <option value="">Select Make</option>
+            {% for make in makes %}
+            <option value="{{ make }}">{{ make }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="model">Model:</label>
+        <input type="text" id="model" name="Model" placeholder="Provide Your Vehicle Model Here">
+        <br>
+        <label for="trim">Trim:</label>
+        <input type="text" id="trim" name="Trim" placeholder="Provide Your Vehicle Trim Here">
+        <br>
+        <label for="VehYear">Vehicle Year:</label>
+        <input type="number" id="VehYear" name="VehYear" placeholder="Provide Your Vehicle Year Here" required>
+        <br>
+        <label for="VehOdo">Vehicle Odometer:</label>
+        <input type="number" id="VehOdo" name="VehOdo" placeholder="Provide Your Vehicle Odometer Here" required>
+        <br>
+        <label for="MMRAcquisitionAuctionAveragePrice">Auction Average Price:</label>
+        <input type="number" id="MMRAcquisitionAuctionAveragePrice" name="MMRAcquisitionAuctionAveragePrice" placeholder="Acquisition price for this vehicle in average condition at time of purchase" required>
+        <br>
+        <label for="MMRAcquisitionAuctionCleanPrice">Auction Clean Price:</label>
+        <input type="number" id="MMRAcquisitionAuctionCleanPrice" name="MMRAcquisitionAuctionCleanPrice" placeholder="Acquisition price for this vehicle in the above Average condition at time of purchase" required>
+        <br>
+        <label for="MMRAcquisitionRetailAveragePrice">Retail Average Price:</label>
+        <input type="number" id="MMRAcquisitionRetailAveragePrice" name="MMRAcquisitionRetailAveragePrice" placeholder="Acquisition price for this vehicle in the retail market in average condition at time of purchase" required>
+        <br>
+        <label for="MMRAcquisitonRetailCleanPrice">Retail Clean Price:</label>
+        <input type="number" id="MMRAcquisitonRetailCleanPrice" name="MMRAcquisitonRetailCleanPrice" placeholder="Acquisition price for this vehicle in the retail market in above average condition at time of purchase" required>
+        <br>
+        <label for="MMRCurrentAuctionAveragePrice">Current Auction Average Price:</label>
+        <input type="number" id="MMRCurrentAuctionAveragePrice" name="MMRCurrentAuctionAveragePrice" placeholder="Acquisition price for this vehicle in average condition as of current day" required>
+        <br>
+        <label for="MMRCurrentAuctionCleanPrice">Current Auction Clean Price:</label>
+        <input type="number" id="MMRCurrentAuctionCleanPrice" name="MMRCurrentAuctionCleanPrice" placeholder="Acquisition price for this vehicle in the above condition as of current day" required>
+        <br>
+        <label for="MMRCurrentRetailAveragePrice">Current Retail Average Price:</label>
+        <input type="number" id="MMRCurrentRetailAveragePrice" name="MMRCurrentRetailAveragePrice" placeholder="Acquisition price for this vehicle in the retail market in average condition as of current day" required>
+        <br>
+        <label for="MMRCurrentRetailCleanPrice">Current Retail Clean Price:</label>
+        <input type="number" id="MMRCurrentRetailCleanPrice" name="MMRCurrentRetailCleanPrice" placeholder="Acquisition price for this vehicle in the retail market in above average condition as of current day" required>
+        <br>
+        <label for="VehBCost">Vehicle Acquisition Cost:</label>
+        <input type="number" id="VehBCost" name="VehBCost" placeholder="Total expenditure incurred to buy and take possession of the vehicle from the auction." required>
+        <br>
+        <label for="WarrantyCost">Warranty Price:</label>
+        <input type="number" id="WarrantyCost" name="WarrantyCost" placeholder"Input warranty price" required>
+        <br>
+        <label for="Auction">Select Auction Provider:</label>
+        <select name="Auction" id="auction" required>
+            <option value="">Please choose Auction Provider</option>
+            <option value="Auction_ADESA">ADESA</option>
+            <option value="Auction_MANHEIM">MANHEIM</option>
+            <option value="Auction_OTHER">OTHER</option>
+        </select>
+        <br>
+        <label for="Transmission">Select Transmission:</label>
+        <select name="Transmission" id="transmission" required>
+            <option value="">Please choose Transmission Type</option>
+            <option value="Transmission_AUTO">AUTO</option>
+            <option value="Transmission_MANUAL">MANUAL</option>
+            <option value="Transmission_nan">Unknown</option>
+        </select>
+        <br>
+        <label for="WheelTypeID">Select Wheel Type:</label>
+        <select name="WheelTypeID" id="wheel_type" required>
+            <option value="">Please choose Wheel Type</option>
+            <option value="WheelTypeID_0.0">Type 0.0</option>
+            <option value="WheelTypeID_1.0">Type 1.0</option>
+            <option value="WheelTypeID_2.0">Type 2.0</option>
+            <option value="WheelTypeID_3.0">Type 3.0</option>
+            <option value="WheelTypeID_nan">Unknown</option>
+        </select>
+        <br>
+        <label for="Nationality">Select Vehicle Nationality:</label>
+        <select name="Nationality" id="nationality" required>
+            <option value="">Please choose Vehicle Nationality</option>
+            <option value="Nationality_AMERICAN">AMERICAN</option>
+            <option value="Nationality_OTHER">OTHER</option>
+            <option value="Nationality_OTHER ASIAN">OTHER ASIAN</option>
+            <option value="Nationality_TOP LINE ASIAN">TOP LINE ASIAN</option>
+            <option value="Nationality_nan">Unknown</option>
+        </select>
+        <br>
+        <label for="TopThreeAmericanName">Is this Manufacturer a Top Three American?</label>
+        <select name="TopThreeAmericanName" id="top_three_american" required>
+            <option value="">Provide Manufacturer details</option>
+            <option value="TopThreeAmericanName_CHRYSLER">CHRYSLER</option>
+            <option value="TopThreeAmericanName_FORD">FORD</option>
+            <option value="TopThreeAmericanName_GM">GM</option>
+            <option value="TopThreeAmericanName_OTHER">OTHER</option>
+            <option value="TopThreeAmericanName_nan">Unknown</option>
+        </select>
+        <br>
+        <label for="IsOnlineSale">Is this an online sale?</label>
+        <select name="IsOnlineSale" id="is_online_sale" required>
+            <option value="">Choose Online Sale Option</option>
+            <option value="IsOnlineSale_0">No</option>
+            <option value="IsOnlineSale_1">Yes</option>
+        </select>
+        <br>
+        <label for="Size">Choose Vehicle Size:</label>
+        <select name="Size" id="size" required>
+            <option value="">Provide Vehicle Size</option>
+            <option value="Size_COMPACT">COMPACT</option>
+            <option value="Size_CROSSOVER">CROSSOVER</option>
+            <option value="Size_LARGE">LARGE</option>
+            <option value="Size_LARGE SUV">LARGE SUV</option>
+            <option value="Size_LARGE TRUCK">LARGE TRUCK</option>
+            <option value="Size_MEDIUM">MEDIUM</option>
+            <option value="Size_MEDIUM SUV">MEDIUM SUV</option>
+            <option value="Size_SMALL SUV">SMALL SUV</option>
+            <option value="Size_SMALL TRUCK">SMALL TRUCK</option>
+            <option value="Size_SPECIALTY">SPECIALTY</option>
+            <option value="Size_SPORTS">SPORTS</option>
+            <option value="Size_VAN">VAN</option>
+            <option value="Size_nan">Unknown</option>
+        </select>
+        <br>
+        <label for="ZipRegion">Choose Zip Region:</label>
+        <select name="ZipRegion" id="zip_region" required>
+            <option value="">Select first Two Digits of Zip Code where the car was purchased</option>
+            {% for zip_region in zip_regions %}
+            <option value="ZipRegion_{{ zip_region }}">{{ zip_region }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="submit" value="Predict">
+    </```html
+</form>
+{% if prediction_text %}
+<h2>Prediction Result: {{ prediction_text }}</h2>
+{% endif %}
+</body>
+</html>
+
