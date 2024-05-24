@@ -66,3 +66,5 @@ Werkzeug==3.0.3
 widgetsnbextension==4.0.10
 xgboost==2.0.3
 xyzservices==2024.4.0
+scikit-learn==1.0.2
+imbalanced-learn==0.8.0
