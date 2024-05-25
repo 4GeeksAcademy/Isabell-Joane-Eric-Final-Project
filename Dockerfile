@@ -25,9 +25,15 @@ RUN conda install -c conda-forge scikit-learn=1.0.2 imbalanced-learn=0.8.0 -y
 # Install the remaining dependencies from requirements.txt using pip
 RUN pip install -r requirements.txt
 
+# Install Gunicorn
+RUN pip install gunicorn
+
 # Copy the rest of the application code into the container
 COPY . .
 
+# Expose the port
+EXPOSE 8000
+
 # Set the entry point for the Docker container
-CMD ["conda", "run", "--no-capture-output", "-n", "myenv", "python", "app.py"]
+CMD ["conda", "run", "--no-capture-output", "-n", "myenv", "gunicorn", "--bind", "0.0.0.0:8000", "app:app"]
 
