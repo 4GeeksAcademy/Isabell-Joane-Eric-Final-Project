@@ -14,7 +14,6 @@ Flask==3.0.3
 fonttools==4.51.0
 greenlet==3.0.3
 idna==3.7
-imbalanced-learn==0.12.2
 imblearn==0.0
 ipyleaflet==0.19.1
 ipython==8.24.0
@@ -48,7 +47,6 @@ python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
 pytz==2024.1
 requests==2.32.2
-scikit-learn==1.5.0
 scipy==1.13.1
 seaborn==0.13.2
 six==1.16.0
@@ -66,3 +64,5 @@ Werkzeug==3.0.3
 widgetsnbextension==4.0.10
 xgboost==2.0.3
 xyzservices==2024.4.0
+scikit-learn==1.0.2
+imbalanced-learn==0.8.0
