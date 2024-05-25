@@ -1,5 +1,5 @@
-# Use the official Python slim image from the Docker Hub
-FROM python:3.11-slim
+# Use the official Miniconda image
+FROM continuumio/miniconda3
 
 # Set the working directory in the container
 WORKDIR /app
@@ -7,23 +7,14 @@ WORKDIR /app
 # Copy the requirements.txt file into the container at /app
 COPY requirements.txt .
 
-# Install system dependencies and additional libraries
-RUN apt-get update && \
-    apt-get install -y build-essential gcc gfortran python3-dev \
-                       libatlas-base-dev liblapack-dev libblas-dev && \
-    rm -rf /var/lib/apt/lists/*
+# Create a Conda environment with Python 3.11
+RUN conda create -n myenv python=3.11 -y
 
-# Upgrade pip and setuptools to the latest version
-RUN pip install --upgrade pip setuptools wheel
-
-# Install specific versions of Cython, numpy, and scipy first to avoid conflicts
-RUN pip install --no-cache-dir cython==0.29.24 numpy==1.26.4 scipy==1.13.1
-
-# Install scikit-learn and imbalanced-learn using precompiled wheels to avoid building from source
-RUN pip install --no-cache-dir scikit-learn==1.0.2 imbalanced-learn==0.8.0
-
-# Install the remaining dependencies from requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# Activate the environment and install the necessary packages
+SHELL ["conda", "run", "-n", "myenv", "/bin/bash", "-c"]
+RUN conda install -c conda-forge cython numpy=1.26.4 scipy=1.13.1 -y
+RUN pip install scikit-learn==1.0.2 imbalanced-learn==0.8.0
+RUN pip install -r requirements.txt
 
 # Copy the rest of the application code into the container
 COPY . .
@@ -32,7 +23,7 @@ COPY . .
 EXPOSE 80
 
 # Define the command to run the application
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:80", "app:app"]
+CMD ["conda", "run", "--no-capture-output", "-n", "myenv", "gunicorn", "-w", "4", "-b", "0.0.0.0:80", "app:app"]
 
 
 
