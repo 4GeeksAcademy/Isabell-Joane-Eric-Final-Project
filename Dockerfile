@@ -1,34 +1,33 @@
-# Use the official Miniconda image
+# Use the official ContinuumIO/miniconda3 image
 FROM continuumio/miniconda3
 
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
-# Install gcc and other necessary build tools
-RUN apt-get update && apt-get install -y build-essential
-
-# Copy the requirements.txt file into the container at /app
+# Copy requirements.txt first to leverage Docker cache
 COPY requirements.txt .
 
-# Create a Conda environment with Python 3.11
-RUN conda create -n myenv python=3.11 -y
+# Create a new conda environment with the specified Python version
+RUN conda create -n myenv python=3.10.10 -y
 
-# Activate the environment and install the necessary packages
+# Activate the new environment
 SHELL ["conda", "run", "-n", "myenv", "/bin/bash", "-c"]
-RUN conda install -c conda-forge cython numpy=1.26.4 scipy=1.13.1 -y
 
-# Install scikit-learn and imbalanced-learn using pip
-RUN pip install scikit-learn==1.0.2 imbalanced-learn==0.8.0
+# Install necessary build tools
+RUN apt-get update && apt-get install -y build-essential
 
-# Install the remaining dependencies from requirements.txt
+# Install cython, numpy, and scipy from conda-forge to ensure precompiled binaries are used
+RUN conda install -c conda-forge cython numpy=1.23.5 scipy=1.8.1 -y
+
+# Install scikit-learn and imbalanced-learn using conda to ensure precompiled binaries are used
+RUN conda install -c conda-forge scikit-learn=1.0.2 imbalanced-learn=0.8.0 -y
+
+# Install the remaining dependencies from requirements.txt using pip
 RUN pip install -r requirements.txt
 
 # Copy the rest of the application code into the container
 COPY . .
 
-# Make port 80 available to the world outside this container
-EXPOSE 80
-
-# Define the command to run the application
-CMD ["conda", "run", "--no-capture-output", "-n", "myenv", "gunicorn", "-w", "4", "-b", "0.0.0.0:80", "app:app"]
+# Set the entry point for the Docker container
+CMD ["conda", "run", "--no-capture-output", "-n", "myenv", "python", "app.py"]
 
