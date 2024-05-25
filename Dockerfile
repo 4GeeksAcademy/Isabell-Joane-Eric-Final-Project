@@ -13,13 +13,16 @@ RUN apt-get update && \
                        libatlas-base-dev liblapack-dev libblas-dev && \
     rm -rf /var/lib/apt/lists/*
 
-# Install Cython first to ensure it is available for building other packages
-RUN pip install --no-cache-dir cython==0.29.24
+# Upgrade pip and setuptools to the latest version
+RUN pip install --upgrade pip setuptools wheel
 
-# Install scikit-learn and other packages using wheels to avoid compilation issues
-RUN pip install --no-cache-dir numpy scipy scikit-learn
+# Install specific versions of Cython, numpy, and scipy first to avoid conflicts
+RUN pip install --no-cache-dir cython==0.29.24 numpy==1.26.4 scipy==1.13.1
 
-# Install the remaining dependencies
+# Install scikit-learn and imbalanced-learn using precompiled wheels to avoid building from source
+RUN pip install --no-cache-dir scikit-learn==1.0.2 imbalanced-learn==0.8.0
+
+# Install the remaining dependencies from requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application code into the container
@@ -30,4 +33,5 @@ EXPOSE 80
 
 # Define the command to run the application
 CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:80", "app:app"]
+
 
