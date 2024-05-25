@@ -7,6 +7,9 @@ WORKDIR /app
 # Install system dependencies
 RUN apt-get update && apt-get install -y build-essential
 
+# Upgrade pip, setuptools, and wheel
+RUN pip install --upgrade pip setuptools wheel
+
 # Copy the current directory contents into the container at /app
 COPY . /app
 
@@ -20,4 +23,4 @@ EXPOSE 80
 ENV FLASK_ENV production
 
 # Run app.py when the container launches
-CMD ["gunicorn", "-b", "0.0.0.0:80", "app:app"] 
+CMD ["gunicorn", "-b", "0.0.0.0:80", "app:app"]
