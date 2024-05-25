@@ -3,146 +3,338 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Car Auction Prediction</title>
+    <title>Vehicle Auction Valuation Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffdb58; /* Mustard Yellow */
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto 0 auto; /* Position lower */
+            padding: 20px;
+            background-color: #1e1e1e; /* Off black */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            background-color: #000000; /* Black */
+            padding: 70px; /* Increased padding for height */
+            border-radius: 8px;
+            width: calc(100% + 40px); /* Extend beyond container padding */
+            margin: -20px;
+            padding: 70px;
+        }
+        .header img {
+            height: 160px; /* Increased size */
+            margin-right: 20px;
+        }
+        .header .text-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .header h1 {
+            font-family: 'Roboto Condensed', sans-serif;
+            font-size: 2.5em;
+            margin: 0;
+            color: #ffdb58; /* Mustard Yellow */
+        }
+        .header p {
+            margin: 5px 0 0 0;
+            font-size: 1em;
+            color: #ffdb58; /* Mustard Yellow */
+        }
+        h1 {
+            text-align: center;
+            font-family: 'Roboto Condensed', sans-serif;
+            color: #ffdb58; /* Mustard Yellow */
+        }
+        .info-box {
+            background-color: rgba(255, 215, 0, 0.3); /* Opaque Yellow */
+            border-left: 4px solid #ffdb58; /* Mustard Yellow */
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background-color: #333;
+            color: #fff;
+        }
+        input[type="submit"] {
+            background-color: #ffdb58; /* Mustard Yellow */
+            border: none;
+            color: #000000; /* Black */
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #d4b830; /* Darker Yellow */
+        }
+        .autocomplete {
+            position: relative;
+        }
+        .autocomplete-items {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            border-bottom: none;
+            border-top: none;
+            z-index: 99;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: #333;
+            color: #fff;
+        }
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .autocomplete-items div:hover {
+            background-color: #0288d1;
+        }
+    </style>
 </head>
 <body>
-    <h1>Car Auction Prediction Form</h1>
-    <form action="/predict" method="post">
-        <label for="make">Make:</label>
-        <select name="Make" id="make" required>
-            <option value="">Select Make</option>
-            {% for make in makes %}
-            <option value="{{ make }}">{{ make }}</option>
-            {% endfor %}
-        </select>
-        <br>
-        <label for="model">Model:</label>
-        <input type="text" id="model" name="Model" placeholder="Provide Your Vehicle Model Here">
-        <br>
-        <label for="trim">Trim:</label>
-        <input type="text" id="trim" name="Trim" placeholder="Provide Your Vehicle Trim Here">
-        <br>
-        <label for="VehYear">Vehicle Year:</label>
-        <input type="number" id="VehYear" name="VehYear" placeholder="Provide Your Vehicle Year Here" required>
-        <br>
-        <label for="VehOdo">Vehicle Odometer:</label>
-        <input type="number" id="VehOdo" name="VehOdo" placeholder="Provide Your Vehicle Odometer Here" required>
-        <br>
-        <label for="MMRAcquisitionAuctionAveragePrice">Auction Average Price:</label>
-        <input type="number" id="MMRAcquisitionAuctionAveragePrice" name="MMRAcquisitionAuctionAveragePrice" placeholder="Acquisition price for this vehicle in average condition at time of purchase" required>
-        <br>
-        <label for="MMRAcquisitionAuctionCleanPrice">Auction Clean Price:</label>
-        <input type="number" id="MMRAcquisitionAuctionCleanPrice" name="MMRAcquisitionAuctionCleanPrice" placeholder="Acquisition price for this vehicle in the above Average condition at time of purchase" required>
-        <br>
-        <label for="MMRAcquisitionRetailAveragePrice">Retail Average Price:</label>
-        <input type="number" id="MMRAcquisitionRetailAveragePrice" name="MMRAcquisitionRetailAveragePrice" placeholder="Acquisition price for this vehicle in the retail market in average condition at time of purchase" required>
-        <br>
-        <label for="MMRAcquisitonRetailCleanPrice">Retail Clean Price:</label>
-        <input type="number" id="MMRAcquisitonRetailCleanPrice" name="MMRAcquisitonRetailCleanPrice" placeholder="Acquisition price for this vehicle in the retail market in above average condition at time of purchase" required>
-        <br>
-        <label for="MMRCurrentAuctionAveragePrice">Current Auction Average Price:</label>
-        <input type="number" id="MMRCurrentAuctionAveragePrice" name="MMRCurrentAuctionAveragePrice" placeholder="Acquisition price for this vehicle in average condition as of current day" required>
-        <br>
-        <label for="MMRCurrentAuctionCleanPrice">Current Auction Clean Price:</label>
-        <input type="number" id="MMRCurrentAuctionCleanPrice" name="MMRCurrentAuctionCleanPrice" placeholder="Acquisition price for this vehicle in the above condition as of current day" required>
-        <br>
-        <label for="MMRCurrentRetailAveragePrice">Current Retail Average Price:</label>
-        <input type="number" id="MMRCurrentRetailAveragePrice" name="MMRCurrentRetailAveragePrice" placeholder="Acquisition price for this vehicle in the retail market in average condition as of current day" required>
-        <br>
-        <label for="MMRCurrentRetailCleanPrice">Current Retail Clean Price:</label>
-        <input type="number" id="MMRCurrentRetailCleanPrice" name="MMRCurrentRetailCleanPrice" placeholder="Acquisition price for this vehicle in the retail market in above average condition as of current day" required>
-        <br>
-        <label for="VehBCost">Vehicle Acquisition Cost:</label>
-        <input type="number" id="VehBCost" name="VehBCost" placeholder="Total expenditure incurred to buy and take possession of the vehicle from the auction." required>
-        <br>
-        <label for="WarrantyCost">Warranty Price:</label>
-        <input type="number" id="WarrantyCost" name="WarrantyCost" placeholder"Input warranty price" required>
-        <br>
-        <label for="Auction">Select Auction Provider:</label>
-        <select name="Auction" id="auction" required>
-            <option value="">Please choose Auction Provider</option>
-            <option value="Auction_ADESA">ADESA</option>
-            <option value="Auction_MANHEIM">MANHEIM</option>
-            <option value="Auction_OTHER">OTHER</option>
-        </select>
-        <br>
-        <label for="Transmission">Select Transmission:</label>
-        <select name="Transmission" id="transmission" required>
-            <option value="">Please choose Transmission Type</option>
-            <option value="Transmission_AUTO">AUTO</option>
-            <option value="Transmission_MANUAL">MANUAL</option>
-            <option value="Transmission_nan">Unknown</option>
-        </select>
-        <br>
-        <label for="WheelTypeID">Select Wheel Type:</label>
-        <select name="WheelTypeID" id="wheel_type" required>
-            <option value="">Please choose Wheel Type</option>
-            <option value="WheelTypeID_0.0">Type 0.0</option>
-            <option value="WheelTypeID_1.0">Type 1.0</option>
-            <option value="WheelTypeID_2.0">Type 2.0</option>
-            <option value="WheelTypeID_3.0">Type 3.0</option>
-            <option value="WheelTypeID_nan">Unknown</option>
-        </select>
-        <br>
-        <label for="Nationality">Select Vehicle Nationality:</label>
-        <select name="Nationality" id="nationality" required>
-            <option value="">Please choose Vehicle Nationality</option>
-            <option value="Nationality_AMERICAN">AMERICAN</option>
-            <option value="Nationality_OTHER">OTHER</option>
-            <option value="Nationality_OTHER ASIAN">OTHER ASIAN</option>
-            <option value="Nationality_TOP LINE ASIAN">TOP LINE ASIAN</option>
-            <option value="Nationality_nan">Unknown</option>
-        </select>
-        <br>
-        <label for="TopThreeAmericanName">Is this Manufacturer a Top Three American?</label>
-        <select name="TopThreeAmericanName" id="top_three_american" required>
-            <option value="">Provide Manufacturer details</option>
-            <option value="TopThreeAmericanName_CHRYSLER">CHRYSLER</option>
-            <option value="TopThreeAmericanName_FORD">FORD</option>
-            <option value="TopThreeAmericanName_GM">GM</option>
-            <option value="TopThreeAmericanName_OTHER">OTHER</option>
-            <option value="TopThreeAmericanName_nan">Unknown</option>
-        </select>
-        <br>
-        <label for="IsOnlineSale">Is this an online sale?</label>
-        <select name="IsOnlineSale" id="is_online_sale" required>
-            <option value="">Choose Online Sale Option</option>
-            <option value="IsOnlineSale_0">No</option>
-            <option value="IsOnlineSale_1">Yes</option>
-        </select>
-        <br>
-        <label for="Size">Choose Vehicle Size:</label>
-        <select name="Size" id="size" required>
-            <option value="">Provide Vehicle Size</option>
-            <option value="Size_COMPACT">COMPACT</option>
-            <option value="Size_CROSSOVER">CROSSOVER</option>
-            <option value="Size_LARGE">LARGE</option>
-            <option value="Size_LARGE SUV">LARGE SUV</option>
-            <option value="Size_LARGE TRUCK">LARGE TRUCK</option>
-            <option value="Size_MEDIUM">MEDIUM</option>
-            <option value="Size_MEDIUM SUV">MEDIUM SUV</option>
-            <option value="Size_SMALL SUV">SMALL SUV</option>
-            <option value="Size_SMALL TRUCK">SMALL TRUCK</option>
-            <option value="Size_SPECIALTY">SPECIALTY</option>
-            <option value="Size_SPORTS">SPORTS</option>
-            <option value="Size_VAN">VAN</option>
-            <option value="Size_nan">Unknown</option>
-        </select>
-        <br>
-        <label for="ZipRegion">Choose Zip Region:</label>
-        <select name="ZipRegion" id="zip_region" required>
-            <option value="">Select first Two Digits of Zip Code where the car was purchased</option>
-            {% for zip_region in zip_regions %}
-            <option value="ZipRegion_{{ zip_region }}">{{ zip_region }}</option>
-            {% endfor %}
-        </select>
-        <br>
-        <input type="submit" value="Predict">
-    </```html
-</form>
-{% if prediction_text %}
-<h2>Prediction Result: {{ prediction_text }}</h2>
-{% endif %}
+    <div class="header">
+        <img src="/static/assets/css/images/AuctionGuard.png" alt="Auction Guard Logo">
+        <div class="text-container">
+            <h1>AUCTION GUARD</h1>
+            <p>auction concierge designed to help you make profitable purchases and fend you against illusive purchases</p>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Vehicle Auction Valuation Tool</h1>
+        <form autocomplete="off" action="/predict" method="post">
+            <label for="make">Make:</label>
+            <input type="text" name="Make" id="make" list="makeList" placeholder="Start typing a make...">
+            <datalist id="makeList">
+                {% for make in makes %}
+                <option value="{{ make }}">
+                {% endfor %}
+            </datalist>
+            <br>
+            <label for="model">Model:</label>
+            <input type="text" name="Model" id="model" list="modelList" placeholder="Start typing a model...">
+            <datalist id="modelList">
+                {% for model in models %}
+                <option value="{{ model }}">
+                {% endfor %}
+            </datalist>
+            <br>
+            <label for="VehYear">Vehicle Year:</label>
+            <input type="number" id="VehYear" name="VehYear" placeholder="Provide Your Vehicle Year Here" required>
+            <br>
+            <label for="VehOdo">Vehicle Odometer:</label>
+            <input type="number" id="VehOdo" name="VehOdo" placeholder="Provide Your Vehicle Odometer Here" required>
+            <br>
+            <div class="info-box">
+                <p>Manheim Market Report (MMR) is used by dealers, wholesalers, and other industry professionals to determine fair market values for vehicles, facilitating informed buying and selling decisions.</p>
+                <ul>
+                    <li><strong>Auction Prices:</strong> Prices vehicles fetch at wholesale auctions.</li>
+                    <li><strong>Retail Prices:</strong> Prices vehicles are listed for or sold at in the retail market.</li>
+                    <li><strong>Condition-Based Pricing:</strong> "Average" condition represents a typical used vehicle, while "Clean" condition represents a well-maintained or refurbished vehicle.</li>
+                </ul>
+            </div>
+            <label for="MMRAcquisitionAuctionAveragePrice">Auction Average Price:</label>
+            <input type="number" id="MMRAcquisitionAuctionAveragePrice" name="MMRAcquisitionAuctionAveragePrice" placeholder="Acquisition price for this vehicle in average condition at time of purchase" required>
+            <br>
+            <label for="MMRAcquisitionAuctionCleanPrice">Auction Clean Price:</label>
+            <input type="number" id="MMRAcquisitionAuctionCleanPrice" name="MMRAcquisitionAuctionCleanPrice" placeholder="Acquisition price for this vehicle in the above Average condition at time of purchase" required>
+            <br>
+            <label for="MMRAcquisitionRetailAveragePrice">Retail Average Price:</label>
+            <input type="number" id="MMRAcquisitionRetailAveragePrice" name="MMRAcquisitionRetailAveragePrice" placeholder="Acquisition price for this vehicle in the retail market in average condition at time of purchase" required>
+            <br>
+            <label for="MMRAcquisitonRetailCleanPrice">Retail Clean Price:</label>
+            <input type="number" id="MMRAcquisitonRetailCleanPrice" name="MMRAcquisitonRetailCleanPrice" placeholder="Acquisition price for this vehicle in the retail market in above average condition at time of purchase" required>
+            <br>
+            <label for="MMRCurrentAuctionAveragePrice">Current Auction Average Price:</label>
+            <input type="number" id="MMRCurrentAuctionAveragePrice" name="MMRCurrentAuctionAveragePrice" placeholder="Acquisition price for this vehicle in average condition as of current day" required>
+            <br>
+            <label for="MMRCurrentAuctionCleanPrice">Current Auction Clean Price:</label>
+            <input type="number" id="MMRCurrentAuctionCleanPrice" name="MMRCurrentAuctionCleanPrice" placeholder="Acquisition price for this vehicle in the above condition as of current day" required>
+            <br>
+            <label for="MMRCurrentRetailAveragePrice">Current Retail Average Price:</label>
+            <input type="number" id="MMRCurrentRetailAveragePrice" name="MMRCurrentRetailAveragePrice" placeholder="Acquisition price for this vehicle in the retail market in average condition as of current day" required>
+            <br>
+            <label for="MMRCurrentRetailCleanPrice">Current Retail Clean Price:</label>
+            <input type="number" id="MMRCurrentRetailCleanPrice" name="MMRCurrentRetailCleanPrice" placeholder="Acquisition price for this vehicle in the retail market in above average condition as of current day" required>
+            <br>
+            <label for="VehBCost">Vehicle Acquisition Cost:</label>
+            <input type="number" id="VehBCost" name="VehBCost" placeholder="Total expenditure incurred to buy and take possession of the vehicle from the auction." required>
+            <br>
+            <label for="WarrantyCost">Warranty Price:</label>
+            <input type="number" id="WarrantyCost" name="WarrantyCost" placeholder="Input warranty price" required>
+            <br>
+            <label for="Auction">Select Auction Provider:</label>
+            <select name="Auction" id="auction" required>
+                <option value="">Please choose Auction Provider</option>
+                <option value="Auction_ADESA">ADESA</option>
+                <option value="Auction_MANHEIM">MANHEIM</option>
+                <option value="Auction_OTHER">OTHER</option>
+            </select>
+            <br>
+            <label for="Transmission">Select Transmission:</label>
+            <select name="Transmission" id="transmission" required>
+                <option value="">Please choose Transmission Type</option>
+                <option value="Transmission_AUTO">AUTO</option>
+                <option value="Transmission_MANUAL">MANUAL</option>
+                <option value="Transmission_nan">Unknown</option>
+            </select>
+            <br>
+            <label for="WheelTypeID">Select Wheel Type:</label>
+            <select name="WheelTypeID" id="wheel_type" required>
+                <option value="">Please choose Wheel Type</option>
+                <option value="WheelTypeID_0.0">Type 0.0</option>
+                <option value="WheelTypeID_1.0">Type 1.0</option>
+                <option value="WheelTypeID_2.0">Type 2.0</option>
+                <option value="WheelTypeID_3.0">Type 3.0</option>
+                <option value="WheelTypeID_nan">Unknown</option>
+            </select>
+            <br>
+            <label for="Nationality">Select Vehicle Nationality:</label>
+            <select name="Nationality" id="nationality" required>
+                <option value="">Please choose Vehicle Nationality</option>
+                <option value="Nationality_AMERICAN">AMERICAN</option>
+                <option value="Nationality_OTHER">OTHER</option>
+                <option value="Nationality_OTHER ASIAN">OTHER ASIAN</option>
+                <option value="Nationality_TOP LINE ASIAN">TOP LINE ASIAN</option>
+                <option value="Nationality_nan">Unknown</option>
+            </select>
+            <br>
+            <label for="TopThreeAmericanName">Is this Manufacturer a Top Three American?</label>
+            <select name="TopThreeAmericanName" id="top_three_american" required>
+                <option value="">Provide Manufacturer details</option>
+                <option value="TopThreeAmericanName_CHRYSLER">CHRYSLER</option>
+                <option value="TopThreeAmericanName_FORD">FORD</option>
+                <option value="TopThreeAmericanName_GM">GM</option>
+                <option value="TopThreeAmericanName_OTHER">OTHER</option>
+                <option value="TopThreeAmericanName_nan">Unknown</option>
+            </select>
+            <br>
+            <label for="IsOnlineSale">Is this an online sale?</label>
+            <select name="IsOnlineSale" id="is_online_sale" required>
+                <option value="">Choose Online Sale Option</option>
+                <option value="IsOnlineSale_0">No</option>
+                <option value="IsOnlineSale_1">Yes</option>
+            </select>
+            <br>
+            <label for="Size">Choose Vehicle Size:</label>
+            <select name="Size" id="size" required>
+                <option value="">Provide Vehicle Size</option>
+                <option value="Size_COMPACT">COMPACT</option>
+                <option value="Size_CROSSOVER">CROSSOVER</option>
+                <option value="Size_LARGE">LARGE</option>
+                <option value="Size_LARGE SUV">LARGE SUV</option>
+                <option value="Size_LARGE TRUCK">LARGE TRUCK</option>
+                <option value="Size_MEDIUM">MEDIUM</option>
+                <option value="Size_MEDIUM SUV">MEDIUM SUV</option>
+                <option value="Size_SMALL SUV">SMALL SUV</option>
+                <option value="Size_SMALL TRUCK">SMALL TRUCK</option>
+                <option value="Size_SPECIALTY">SPECIALTY</option>
+                <option value="Size_SPORTS">SPORTS</option>
+                <option value="Size_VAN">VAN</option>
+                <option value="Size_nan">Unknown</option>
+            </select>
+            <br>
+            <label for="ZipRegion">Choose Zip Region:</label>
+            <select name="ZipRegion" id="zip_region" required>
+                <option value="">Select first Two Digits of Zip Code where the car was purchased</option>
+                {% for zip_region in zip_regions %}
+                <option value="ZipRegion_{{ zip_region }}">{{ zip_region }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <input type="submit" value="Predict">
+        </form>
+        {% if prediction_text %}
+        <h2>Prediction Result: {{ prediction_text }}</h2>
+        {% endif %}
+    </div>
+    <script>
+        function autocomplete(inp, arr) {
+            var currentFocus;
+            inp.addEventListener("input", function(e) {
+                var a, b, i, val = this.value;
+                closeAllLists();
+                if (!val) { return false; }
+                currentFocus = -1;
+                a = document.createElement("DIV");
+                a.setAttribute("id", this.id + "autocomplete-list");
+                a.setAttribute("class", "autocomplete-items");
+                this.parentNode.appendChild(a);
+                for (i = 0; i < arr.length; i++) {
+                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                        b = document.createElement("DIV");
+                        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                        b.innerHTML += arr[i].substr(val.length);
+                        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                        b.addEventListener("click", function(e) {
+                            inp.value = this.getElementsByTagName("input")[0].value;
+                            closeAllLists();
+                        });
+                        a.appendChild(b);
+                    }
+                }
+            });
+            inp.addEventListener("keydown", function(e) {
+                var x = document.getElementById(this.id + "autocomplete-list");
+                if (x) x = x.getElementsByTagName("div");
+                if (e.keyCode == 40) {
+                    currentFocus++;
+                    addActive(x);
+                } else if (e.keyCode == 38) {
+                    currentFocus--;
+                    addActive(x);
+                } else if (e.keyCode == 13) {
+                    e.preventDefault();
+                    if (currentFocus > -1) {
+                        if (x) x[currentFocus].click();
+                    }
+                }
+            });
+            function addActive(x) {
+                if (!x) return false;
+                removeActive(x);
+                if (currentFocus >= x.length) currentFocus = 0;
+                if (currentFocus < 0) currentFocus = (x.length - 1);
+                x[currentFocus].classList.add("autocomplete-active");
+            }
+            function removeActive(x) {
+                for (var i = 0; i < x.length; i++) {
+                    x[i].classList.remove("autocomplete-active");
+                }
+            }
+            function closeAllLists(elmnt) {
+                var x = document.getElementsByClassName("autocomplete-items");
+                for (var i = 0; i < x.length; i++) {
+                    if (elmnt != x[i] && elmnt != inp) {
+                        x[i].parentNode.removeChild(x[i]);
+                    }
+                }
+            }
+            document.addEventListener("click", function(e) {
+                closeAllLists(e.target);
+            });
+        }
+    
+        var models = {{ models | tojson | safe }};
+        autocomplete(document.getElementById("model"), models);
+    </script>
 </body>
 </html>
-

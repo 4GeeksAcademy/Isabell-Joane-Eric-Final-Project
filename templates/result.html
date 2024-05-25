@@ -2,11 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prediction Result</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Prediction Result</h1>
-    <p>{{ prediction_text }}</p>
-    <a href="/">Go Back</a>
+    <div class="container mt-5">
+        <h1>Prediction Result</h1>
+        <div class="alert alert-info">{{ prediction_text }}</div>
+        <a href="/" class="btn btn-primary">Go Back</a>
+    </div>
 </body>
 </html>
+
